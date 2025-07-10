@@ -29,9 +29,6 @@
             position: relative;
             z-index: 2;
         }
-        .form-container, .confirmation-container {
-            display: none; /* Hidden by default */
-        }
         .loader {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #3b82f6;
@@ -58,9 +55,9 @@
                 <p class="text-2xl md:text-3xl font-light mb-6">A Webinar on Self-Employed & Variable Income</p>
                 <p class="max-w-3xl mx-auto text-lg text-blue-100 mb-8">Join home loan expert Dan DiStefano to learn the keys to securing a mortgage when you're self-employed or have variable income. Gain the confidence you need to achieve your homeownership goals.</p>
                 <p class="font-semibold text-xl mb-10">Wednesday, July 30th, 2025 | 5:00 PM Central Time</p>
-                <button id="register-now-btn" class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transform hover:scale-105 transition-transform duration-300 shadow-lg">
+                <a href="https://events.teams.microsoft.com/event/4102b38f-2504-4bbf-91e5-411078c886af@c7d2c1c0-4119-4404-bb2c-5db5d2e73374/registration" target="_blank" rel="noopener noreferrer" class="bg-white text-blue-600 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transform hover:scale-105 transition-transform duration-300 shadow-lg inline-block">
                     Register Now
-                </button>
+                </a>
             </div>
         </header>
 
@@ -136,175 +133,15 @@
             <section class="text-center">
                  <h2 class="text-3xl font-bold mb-4">Ready to Secure Your Future?</h2>
                  <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">Don't let a complex income situation stand in the way of your dream home. Reserve your spot today and take the first step towards a confident home-buying journey.</p>
-                 <button id="final-register-btn" class="bg-blue-600 text-white font-bold py-4 px-10 rounded-full text-xl hover:bg-blue-700 transform hover:scale-105 transition-transform duration-300 shadow-lg">
+                 <a href="https://events.teams.microsoft.com/event/4102b38f-2504-4bbf-91e5-411078c886af@c7d2c1c0-4119-4404-bb2c-5db5d2e73374/registration" target="_blank" rel="noopener noreferrer" class="bg-blue-600 text-white font-bold py-4 px-10 rounded-full text-xl hover:bg-blue-700 transform hover:scale-105 transition-transform duration-300 shadow-lg inline-block">
                     Save My Spot!
-                </button>
+                </a>
             </section>
 
         </main>
     </div>
 
-    <!-- Registration Form Modal -->
-    <div id="form-container" class="form-container fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-lg relative transform transition-all duration-300 scale-95 opacity-0" id="form-modal">
-             <button id="close-form-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
-            <h2 class="text-3xl font-bold text-center mb-2">Register for the Webinar</h2>
-            <p class="text-center text-gray-600 mb-8">It's free! You'll receive a Microsoft Teams link via email before the event.</p>
-            <!-- UPDATED FORM TAG -->
-            <form id="registration-form" action="https://formspree.io/f/xeokyaya" method="POST">
-                <div class="mb-5">
-                    <label for="name" class="block text-gray-700 font-medium mb-2">Full Name</label>
-                    <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                </div>
-                <div class="mb-8">
-                    <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
-                    <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg text-lg hover:bg-blue-700 transition-colors duration-300">
-                    Complete Registration
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Confirmation Message Modal -->
-    <div id="confirmation-container" class="confirmation-container fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
-         <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-lg text-center transform transition-all duration-300 scale-95 opacity-0" id="confirmation-modal">
-            <h2 class="text-3xl font-bold text-green-600 mb-4">You're Registered!</h2>
-            <p class="text-gray-700 mb-6">Thank you for signing up. A confirmation and the Microsoft Teams meeting link will be sent to your email shortly. We look forward to seeing you there!</p>
-            <a id="add-to-calendar" href="#" class="inline-block bg-gray-800 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-900 transition-colors duration-300 shadow-md">
-                Add to Calendar
-            </a>
-        </div>
-    </div>
-
     <script>
-        // --- Modal Control ---
-        const registerNowBtn = document.getElementById('register-now-btn');
-        const finalRegisterBtn = document.getElementById('final-register-btn');
-        const closeFormBtn = document.getElementById('close-form-btn');
-        const formContainer = document.getElementById('form-container');
-        const formModal = document.getElementById('form-modal');
-        const registrationForm = document.getElementById('registration-form');
-        const confirmationContainer = document.getElementById('confirmation-container');
-        const confirmationModal = document.getElementById('confirmation-modal');
-
-        const openForm = () => {
-            formContainer.style.display = 'flex';
-            setTimeout(() => {
-                formModal.classList.remove('scale-95', 'opacity-0');
-                formModal.classList.add('scale-100', 'opacity-100');
-            }, 10);
-        };
-
-        const closeForm = () => {
-            formModal.classList.remove('scale-100', 'opacity-100');
-            formModal.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                formContainer.style.display = 'none';
-            }, 300);
-        };
-
-        registerNowBtn.addEventListener('click', openForm);
-        finalRegisterBtn.addEventListener('click', openForm);
-        closeFormBtn.addEventListener('click', closeForm);
-        formContainer.addEventListener('click', (e) => {
-            if (e.target === formContainer) {
-                closeForm();
-            }
-        });
-
-        // --- Form Submission ---
-        registrationForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const form = e.target;
-            const data = new FormData(form);
-            
-            try {
-                const response = await fetch(form.action, {
-                    method: form.method,
-                    body: data,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    form.reset();
-                    closeForm();
-                    setTimeout(() => {
-                        showConfirmation();
-                    }, 300);
-                } else {
-                    // Handle server errors or validation errors from Formspree
-                    alert("There was a problem with your submission. Please try again.");
-                }
-            } catch (error) {
-                // Handle network errors
-                alert("An error occurred. Please check your connection and try again.");
-            }
-        });
-
-        const showConfirmation = () => {
-            setupCalendarLink();
-            confirmationContainer.style.display = 'flex';
-            setTimeout(() => {
-                confirmationModal.classList.remove('scale-95', 'opacity-0');
-                confirmationModal.classList.add('scale-100', 'opacity-100');
-            }, 10);
-            
-            setTimeout(() => {
-                 closeConfirmation();
-            }, 8000);
-        };
-
-        const closeConfirmation = () => {
-            confirmationModal.classList.remove('scale-100', 'opacity-100');
-            confirmationModal.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                confirmationContainer.style.display = 'none';
-            }, 300);
-        };
-        
-        confirmationContainer.addEventListener('click', (e) => {
-            if (e.target === confirmationContainer) {
-                closeConfirmation();
-            }
-        });
-
-        // --- Add to Calendar Functionality ---
-        function setupCalendarLink() {
-            // Set the webinar date: July 30, 2025, at 5:00 PM Central Time (UTC-5)
-            // 5:00 PM is 17:00. In UTC, this is 22:00.
-            const eventDate = new Date(Date.UTC(2025, 6, 30, 22, 0, 0)); // Month is 0-indexed (6 = July)
-
-            const startTime = eventDate.toISOString().replace(/-|:|\.\d{3}Z$/g, "").replace(/:/g,'');
-            
-            // Assuming the webinar is 1 hour long
-            const endDate = new Date(eventDate.getTime());
-            endDate.setHours(endDate.getHours() + 1);
-            const endTime = endDate.toISOString().replace(/-|:|\.\d{3}Z$/g, "").replace(/:/g,'');
-
-            const calendarData = [
-                'BEGIN:VCALENDAR',
-                'VERSION:2.0',
-                'BEGIN:VEVENT',
-                'URL:' + document.URL,
-                'DTSTART:' + startTime + 'Z',
-                'DTEND:' + endTime + 'Z',
-                'SUMMARY:Webinar: Self-Employed & Variable Income',
-                'DESCRIPTION:Join home loan expert Dan DiStefano to learn the keys to securing a mortgage. A Microsoft Teams link will be sent via email.',
-                'LOCATION:Microsoft Teams (Online)',
-                'END:VEVENT',
-                'END:VCALENDAR'
-            ].join('\\n');
-
-            const calendarLink = document.getElementById('add-to-calendar');
-            calendarLink.href = 'data:text/calendar;charset=utf8,' + encodeURIComponent(calendarData);
-            calendarLink.download = 'webinar-self-employed-income.ics';
-        }
-
         // --- Gemini API Checklist Generator ---
         const generateBtn = document.getElementById('generate-checklist-btn');
         const situationInput = document.getElementById('situation-input');
