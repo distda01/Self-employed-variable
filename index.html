@@ -101,7 +101,7 @@
                 <h2 class="text-3xl font-bold mb-3">Get Prepared Now</h2>
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-6">Not sure what documents you need? Describe your work situation below to get a personalized checklist in seconds.</p>
                 <div class="max-w-2xl mx-auto">
-                    <textarea id="situation-input" class="w-full p-4 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="3" placeholder="Example: I'm a freelance graphic designer for 3 years, filing a Schedule C."></textarea>
+                    <textarea id="situation-input" class="w-full p-4 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="3" placeholder="Example: I'm a freelance graphic designer for 3 years, and my spouse has a W-2 job."></textarea>
                     <button id="generate-checklist-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg">
                         ✨ Generate My Checklist
                     </button>
@@ -161,32 +161,37 @@
             generateBtn.disabled = true;
 
             const prompt = `
-You are an expert mortgage consultant specializing in loans for self-employed individuals, based on the content of a webinar titled 'Self Employed & Variable Income'.
+You are an expert mortgage consultant. A user is asking for a personalized document checklist to prepare for a mortgage application.
 
-A user is asking for a personalized document checklist to prepare for a mortgage application.
+Carefully analyze the user's entire situation described below. Based on all aspects of their situation, create a comprehensive checklist of documents they will likely need. Pull requirements from both the 'Self-Employment/Variable Income' and 'Standard W-2 Employment' context as needed. If the user mentions both types of income, include documents for both. If they only mention one, only include documents for that type.
 
-Webinar context:
-- Sole proprietors file a Schedule C.
-- Partnerships (1065s) provide K-1s.
-- S-Corps (1120S) provide K-1s.
-- C-Corps (1120) don't provide K-1s.
-- General requirements include: 2 years of personal and business tax returns (1040s and business returns), a year-to-date Profit & Loss (P&L) statement, and a year-to-date balance sheet.
-- If self-employed for over 5 years, only one year of tax returns might be needed.
-- Other potential documents: 1099s, bank statements, business license, letter from CPA, business insurance, DBA registration.
-- For variable income (tips, bonus, commission, overtime), a 2-year history is usually needed, documented via pay stubs and W2s.
+**Context for Self-Employment / Variable Income:**
+- **Sole proprietors / 1099 Contractors:** Typically file a Schedule C with their personal 1040 tax return.
+- **Partnerships (25%+ ownership):** File a Form 1065 and provide K-1s to partners.
+- **S-Corps (25%+ ownership):** File a Form 1120S and provide K-1s to owners.
+- **C-Corps (25%+ ownership):** File a Form 1120.
+- **General Self-Employment Docs:** 2 years of personal and business tax returns, a year-to-date Profit & Loss (P&L) statement, and a year-to-date balance sheet. If self-employed for over 5 years, only one year of tax returns might be needed.
+- **Variable Income (tips, bonus, commission, overtime):** A 2-year history is usually needed, documented via pay stubs and W2s.
 
-User's situation: "${userInput}"
+**Context for Standard W-2 Employment:**
+- **Paystubs:** Most recent 30 days.
+- **W-2 Forms:** Last 2 years.
 
-Based on the user's situation and the webinar context, generate a simple, easy-to-read checklist of documents they will likely need to provide. Format the output as a Markdown list with checkboxes. Do not add any introductory or concluding sentences, just the list.
+**User's situation:** "${userInput}"
+
+**Instructions:**
+Generate a simple, easy-to-read checklist of documents. Format the output as a Markdown list with checkboxes. Do not add any introductory or concluding sentences, just the list.
 For example:
 - [ ] 2 years of personal tax returns (Form 1040)
+- [ ] 2 years of W-2 forms
+- [ ] Most recent 30 days of paystubs
 - [ ] 2 years of business tax returns (Schedule C)
             `;
 
             try {
                 let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
                 const payload = { contents: chatHistory };
-                const apiKey = "AIzaSyAFzH9jY5rnQtc2-bjvs5kY4bv_sQiWb0U"; // API key will be handled by the environment
+                const apiKey = "AIzaSyAFzH9jY5rnQtc2-bjvs5kY4bv_sQiWb0U";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 
                 const response = await fetch(apiUrl, {
