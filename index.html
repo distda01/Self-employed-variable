@@ -254,22 +254,24 @@
 
         // --- Add to Calendar Functionality ---
         function setupCalendarLink() {
-            const eventDate = new Date();
-            eventDate.setMonth(eventDate.getMonth() + 1);
-            eventDate.setDate(15);
-            eventDate.setHours(14, 0, 0); // 2:00 PM
+            // Set the webinar date: July 30, 2025, at 5:00 PM Central Time (UTC-5)
+            // 5:00 PM is 17:00. In UTC, this is 22:00.
+            const eventDate = new Date(Date.UTC(2025, 6, 30, 22, 0, 0)); // Month is 0-indexed (6 = July)
 
-            const startTime = eventDate.toISOString().replace(/-|:|\.\d\d\d/g, "");
-            eventDate.setHours(eventDate.getHours() + 1);
-            const endTime = eventDate.toISOString().replace(/-|:|\.\d\d\d/g, "");
+            const startTime = eventDate.toISOString().replace(/-|:|\.\d{3}Z$/g, "").replace(/:/g,'');
+            
+            // Assuming the webinar is 1 hour long
+            const endDate = new Date(eventDate.getTime());
+            endDate.setHours(endDate.getHours() + 1);
+            const endTime = endDate.toISOString().replace(/-|:|\.\d{3}Z$/g, "").replace(/:/g,'');
 
             const calendarData = [
                 'BEGIN:VCALENDAR',
                 'VERSION:2.0',
                 'BEGIN:VEVENT',
                 'URL:' + document.URL,
-                'DTSTART:' + startTime,
-                'DTEND:' + endTime,
+                'DTSTART:' + startTime + 'Z',
+                'DTEND:' + endTime + 'Z',
                 'SUMMARY:Webinar: Self-Employed & Variable Income',
                 'DESCRIPTION:Join home loan expert Dan DiStefano to learn the keys to securing a mortgage. A Microsoft Teams link will be sent via email.',
                 'LOCATION:Microsoft Teams (Online)',
